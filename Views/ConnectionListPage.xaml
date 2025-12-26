@@ -1,0 +1,77 @@
+<Page x:Class="ControllerManager.Views.ConnectionListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#1E1E1E">
+
+    <Grid Margin="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Connection List" FontSize="28" FontWeight="Bold" 
+                   Foreground="White" Margin="0,0,0,30"/>
+
+        <Border Grid.Row="1" Background="#2D2D30" Padding="20" CornerRadius="8">
+            <Grid>
+                <Grid Height="40" VerticalAlignment="Top" Background="#3E3E42" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Controller ID" Foreground="White" FontWeight="SemiBold" 
+                               VerticalAlignment="Center" Margin="15,0"/>
+                    <TextBlock Grid.Column="1" Text="Connection Type" Foreground="White" FontWeight="SemiBold" 
+                               VerticalAlignment="Center" Margin="15,0"/>
+                    <TextBlock Grid.Column="2" Text="Battery" Foreground="White" FontWeight="SemiBold" 
+                               VerticalAlignment="Center" Margin="15,0"/>
+                    <TextBlock Grid.Column="3" Text="Profile" Foreground="White" FontWeight="SemiBold" 
+                               VerticalAlignment="Center" Margin="15,0"/>
+                    <TextBlock Grid.Column="4" Text="LED Colour" Foreground="White" FontWeight="SemiBold" 
+                               VerticalAlignment="Center" Margin="15,0"/>
+                </Grid>
+
+                <ListBox ItemsSource="{Binding Devices}" Background="Transparent" BorderThickness="0" 
+                         Margin="0,50,0,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#3E3E42" Padding="0" Margin="0,5" CornerRadius="4" Height="50">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="White" 
+                                               VerticalAlignment="Center" Margin="15,0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding ConnectionType}" Foreground="#CCCCCC" 
+                                               VerticalAlignment="Center" Margin="15,0"/>
+                                    <TextBlock Grid.Column="2" Foreground="#CCCCCC" 
+                                               VerticalAlignment="Center" Margin="15,0">
+                                        <Run Text="{Binding BatteryLevel}"/>
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="3" Text="{Binding CurrentProfile}" Foreground="#CCCCCC" 
+                                               VerticalAlignment="Center" Margin="15,0"/>
+                                    <Ellipse Grid.Column="4" Width="20" Height="20" Fill="#0078D4" 
+                                             HorizontalAlignment="Left" Margin="15,0"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Text="No controllers connected" FontSize="16" Foreground="#666" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{Binding Devices.Count, Converter={StaticResource ZeroToVisibilityConverter}}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

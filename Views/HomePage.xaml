@@ -1,0 +1,105 @@
+<Page x:Class="ControllerManager.Views.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Background="#1E1E1E">
+
+    <Grid Margin="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#2D2D30" Padding="30" CornerRadius="8" Margin="0,0,0,30">
+            <StackPanel>
+                <TextBlock Text="Status" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,15"/>
+                <TextBlock Text="{Binding StatusMessage}" FontSize="16" Foreground="#CCCCCC" Margin="0,0,0,10"/>
+
+                <StackPanel Visibility="{Binding SelectedDevice, Converter={StaticResource NullToVisibilityConverter}}">
+                    <TextBlock Foreground="#AAAAAA" Margin="0,10,0,5">
+                        <Run Text="Controller Type: "/>
+                        <Run Text="{Binding SelectedDevice.Type}" FontWeight="SemiBold"/>
+                    </TextBlock>
+                    <TextBlock Foreground="#AAAAAA" Margin="0,0,0,5">
+                        <Run Text="Emulated Type: "/>
+                        <Run Text="{Binding SelectedDevice.InputType}" FontWeight="SemiBold"/>
+                    </TextBlock>
+                    <TextBlock Foreground="#AAAAAA" Margin="0,0,0,5">
+                        <Run Text="Current Profile: "/>
+                        <Run Text="{Binding SelectedDevice.CurrentProfile}" FontWeight="SemiBold"/>
+                    </TextBlock>
+                    <TextBlock Text="Battery:" Foreground="#AAAAAA" Margin="0,0,0,5" 
+                               Visibility="{Binding SelectedDevice.BatteryLevel, Converter={StaticResource BatteryVisibilityConverter}}">
+                        <Run Text="{Binding SelectedDevice.BatteryLevel}"/>
+                        <Run Text="%"/>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Background="#2D2D30" Padding="30" CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="Quick Settings" FontSize="20" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,20"/>
+                
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Adaptive Triggers (Enabled/Disabled, Dualsense)" 
+                                   FontSize="14" Foreground="#CCCCCC" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Column="1" Width="150" Height="30">
+                            <ComboBoxItem Content="Enabled"/>
+                            <ComboBoxItem Content="Disabled" IsSelected="True"/>
+                            <ComboBoxItem Content="Dualsense"/>
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Vibration Intensity (Vibration)" 
+                                   FontSize="14" Foreground="#CCCCCC" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="Test Vibration" 
+                                Command="{Binding TestVibrationCommand}"
+                                Width="150" Height="30"
+                                Background="#0078D4" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                    </Grid>
+
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Change Profile" 
+                                   FontSize="14" Foreground="#CCCCCC" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="Change Profile" 
+                                Command="{Binding ChangeProfileCommand}"
+                                Width="150" Height="30"
+                                Background="#0078D4" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                    </Grid>
+
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Change LED Colour (Dualsense/Dualshock)" 
+                                   FontSize="14" Foreground="#CCCCCC" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="Change Color" 
+                                Command="{Binding ChangeLedColorCommand}"
+                                Width="150" Height="30"
+                                Background="#0078D4" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

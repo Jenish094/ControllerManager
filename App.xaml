@@ -1,0 +1,20 @@
+<Application x:Class="ControllerManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:ControllerManager.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ControllerManager;component/Styles/Colour.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ControllerManager;component/Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ControllerManager;component/Styles/TextBlocks.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters:InverseNullToVisibilityConverter x:Key="InverseNullToVisibilityConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter"/>
+            <converters:BatteryVisibilityConverter x:Key="BatteryVisibilityConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

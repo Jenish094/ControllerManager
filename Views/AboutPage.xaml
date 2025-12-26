@@ -1,0 +1,44 @@
+<Page x:Class="ControllerManager.Views.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#1E1E1E">
+
+    <Grid Margin="40">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="700" HorizontalAlignment="Center">
+                <Border Width="120" Height="120" Background="#0078D4" CornerRadius="60" 
+                        HorizontalAlignment="Center" Margin="0,40,0,30">
+                    <TextBlock Text="addcontrollericon" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock Text="{Binding AppName}" FontSize="32" FontWeight="Bold" 
+                           Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                <TextBlock Text="{Binding Version}" FontSize="16" Foreground="#AAAAAA" 
+                           HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+                <Border Background="#2D2D30" Padding="30" CornerRadius="8" Margin="0,0,0,20">
+                    <TextBlock Text="{Binding Description}" FontSize="14" Foreground="#CCCCCC" 
+                               TextWrapping="Wrap" LineHeight="22"/>
+                </Border>
+
+                <Border Background="#2D2D30" Padding="30" CornerRadius="8" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock Text="Features" FontSize="18" FontWeight="SemiBold" 
+                                   Foreground="White" Margin="0,0,0,15"/>
+                        <TextBlock Text="{Binding Features}" FontSize="14" Foreground="#CCCCCC" 
+                                   LineHeight="24" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#2D2D30" Padding="30" CornerRadius="8" Margin="0,0,0,40">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="GitHub" Width="100" Height="35" 
+                                    Background="#3E3E42" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

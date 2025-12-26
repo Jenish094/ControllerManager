@@ -1,0 +1,84 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build"
+		},
+		{
+			"label": "run",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"c:\\Users\\jenis\\Desktop\\ControllerManager\\ControllerManager\\ControllerManager.csproj"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "run-verbose",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"c:\\Users\\jenis\\Desktop\\ControllerManager\\ControllerManager\\ControllerManager.csproj",
+				"--verbosity",
+				"diag"
+			],
+			"isBackground": false,
+			"group": "test"
+		},
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build"
+		},
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build"
+		},
+		{
+			"label": "run-verbose",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"c:\\Users\\jenis\\Desktop\\ControllerManager\\ControllerManager\\ControllerManager.csproj",
+				"--verbosity",
+				"diag"
+			],
+			"isBackground": false,
+			"group": "test"
+		}
+	]
+}
