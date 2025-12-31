@@ -37,13 +37,13 @@ public class ConnectionListViewModel : ViewModelBase
         });
     }
 
-    private static int GetPriority(InputType input)
+    private static int GetPriority(Models.InputType input)
     {
         return input switch
         {
-            InputType.XInput => 0,
-            InputType.DirectInput => 1,
-            InputType.HID => 2,
+            Models.InputType.XInput => 0,
+            Models.InputType.DirectInput => 1,
+            Models.InputType.HID => 2,
             _ => 3
         };
     }

@@ -9,6 +9,10 @@ namespace ControllerManager.ViewModels;
 public class HomeViewModel : ViewModelBase
 {
     private readonly IDeviceManager _deviceManager;
+    private readonly IVibrationService _vibrationService;
+    private readonly ILedControlService _ledControl;
+    private readonly IRemappingService _remappingService;
+    private readonly IConfigurationService _configService;
     private ControllerDevice? _selectedDevice;
     private string _statusMessage = "No controller connected";
 
@@ -34,9 +38,18 @@ public class HomeViewModel : ViewModelBase
     public ICommand ChangeProfileCommand { get; }
     public ICommand ChangeLedColorCommand { get; }
 
-    public HomeViewModel(IDeviceManager deviceManager)
+    public HomeViewModel(
+        IDeviceManager deviceManager,
+        IVibrationService vibrationService,
+        ILedControlService ledControl,
+        IRemappingService remappingService,
+        IConfigurationService configService)
     {
         _deviceManager = deviceManager;
+        _vibrationService = vibrationService;
+        _ledControl = ledControl;
+        _remappingService = remappingService;
+        _configService = configService;
         ConnectedDevices = new ObservableCollection<ControllerDevice>();
 
         _deviceManager.DeviceConnected += OnDeviceConnected;
@@ -72,15 +85,12 @@ public class HomeViewModel : ViewModelBase
     {
         System.Windows.Application.Current.Dispatcher.Invoke(() =>
         {
-            //rebuilt list with the prioritying from connectionlistviewmodel.cs
             var all = ConnectedDevices.Concat(new[] { device })
                 .OrderBy(d => GetPriority(d.InputType))
                 .ThenBy(d => d.Name)
                 .ToList();
             ConnectedDevices.Clear();
             foreach (var d in all) ConnectedDevices.Add(d);
-
-            //select the top most device on the list as the status device
             SelectedDevice = ConnectedDevices.FirstOrDefault();
             UpdateStatusMessage();
         });
@@ -105,13 +115,13 @@ public class HomeViewModel : ViewModelBase
         });
     }
 
-    private static int GetPriority(InputType input)
+    private static int GetPriority(Models.InputType input)
     {
         return input switch
         {
-            InputType.XInput => 0,
-            InputType.DirectInput => 1,
-            InputType.HID => 2,
+            Models.InputType.XInput => 0,
+            Models.InputType.DirectInput => 1,
+            Models.InputType.HID => 2,
             _ => 3
         };
     }
@@ -136,19 +146,45 @@ public class HomeViewModel : ViewModelBase
 
     private void TestVibration()
     {
-        // TODO: Add vibration test logic
-        System.Diagnostics.Debug.WriteLine("Test Vibration clicked");
+        if (SelectedDevice != null)
+        {
+            _vibrationService.TestVibration(SelectedDevice);
+        }
     }
 
     private void ChangeProfile()
     {
-        // TODO:Add profile changing logic
-        System.Diagnostics.Debug.WriteLine("Change Profile clicked");
+        if (SelectedDevice == null)
+            return;
+
+        var profiles = _configService.LoadProfiles();
+        if (profiles.Any())
+        {
+            var currentIndex = profiles.FindIndex(p => p.Name == SelectedDevice.CurrentProfile);
+            var nextIndex = (currentIndex + 1) % profiles.Count;
+            var nextProfile = profiles[nextIndex];
+            
+            SelectedDevice.CurrentProfile = nextProfile.Name;
+            if (_remappingService.IsRemapping(SelectedDevice.InstanceId))
+            {
+                _remappingService.SetProfile(SelectedDevice.InstanceId, nextProfile);
+            }
+            
+            UpdateStatusMessage();
+        }
     }
 
     private void ChangeLedColor()
     {
-        // TODO: Add LED colour switching logic
-        System.Diagnostics.Debug.WriteLine("Change LED Color clicked");
+        if (SelectedDevice == null)
+            return;
+
+        if (_ledControl.SupportsLedControl(SelectedDevice))
+        {
+            var colors = new[] { (0, 120, 255), (255, 0, 0), (0, 255, 0), (255, 255, 0), (255, 0, 255) };
+            var random = new Random();
+            var color = colors[random.Next(colors.Length)];
+            _ledControl.SetLedColor(SelectedDevice, (byte)color.Item1, (byte)color.Item2, (byte)color.Item3);
+        }
     }
 }

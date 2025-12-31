@@ -39,6 +39,14 @@ public partial class App : Application
         services.AddSingleton<IHidService, HidService>();
         services.AddSingleton<IConfigurationService, ConfigurationService>();
         services.AddSingleton<INavigationService, NavigationService>();
+
+        services.AddSingleton<IVirtualOutputService, VirtualOutputService>();
+        services.AddSingleton<IInputPollingService, InputPollingService>();
+        services.AddSingleton<IMappingEngine, MappingEngine>();
+        services.AddSingleton<IRemappingService, RemappingService>();
+        services.AddSingleton<IVibrationService, VibrationService>();
+        services.AddSingleton<ILedControlService, LedControlService>();
+
         services.AddSingleton<ViewModels.MainViewModel>();
         services.AddTransient<ViewModels.HomeViewModel>();
         services.AddTransient<ViewModels.ControllerViewModel>();
@@ -46,6 +54,7 @@ public partial class App : Application
         services.AddTransient<ViewModels.SettingsViewModel>();
         services.AddTransient<ViewModels.ConnectionListViewModel>();
         services.AddTransient<ViewModels.AboutViewModel>();
+
         services.AddSingleton<MainWindow>();
         services.AddTransient<Views.HomePage>();
         services.AddTransient<Views.ControllerPage>();
